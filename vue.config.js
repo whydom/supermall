@@ -5,6 +5,7 @@ module.exports = {
         'assets': '@/assets',
         'components': '@/components',
         'views': '@/views',
+        'network': '@/network',
       }
     }
   },
@@ -18,6 +19,7 @@ module.exports = {
           '^/api': ''
         }
       }
-    }
+    },
+    disableHostCheck: true
   }
 }

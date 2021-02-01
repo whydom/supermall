@@ -26,7 +26,7 @@ const routes = [
     component: Shopcar
   },
   {
-    path: '/peofile',
+    path: '/profile',
     component: Profile
   }
 ]
