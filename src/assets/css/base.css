@@ -31,7 +31,6 @@ a {
   text-decoration: none;
 }
 
-
 .clear-fix::after {
   clear: both;
   content: '';

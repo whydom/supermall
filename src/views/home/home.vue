@@ -4,9 +4,39 @@
     <mainnav :banner='banner' class="banner"></mainnav>
     <recommd :recommd1='recommd'></recommd>
     <feature></feature>
-    <tabcontrol :title="['流行','新款','精选']"></tabcontrol>
+    <tabcontrol :title="['流行','新款','精选']" class="tabcontrol"></tabcontrol>
 
     <ul>
+      <li>数据1</li>
+      <li>数据2</li>
+      <li>数据3</li>
+      <li>数据4</li>
+      <li>数据5</li>
+      <li>数据6</li>
+      <li>数据7</li>
+      <li>数据8</li>
+      <li>数据9</li>
+      <li>数据10</li>
+      <li>数据1</li>
+      <li>数据2</li>
+      <li>数据3</li>
+      <li>数据4</li>
+      <li>数据5</li>
+      <li>数据6</li>
+      <li>数据7</li>
+      <li>数据8</li>
+      <li>数据9</li>
+      <li>数据10</li>
+      <li>数据1</li>
+      <li>数据2</li>
+      <li>数据3</li>
+      <li>数据4</li>
+      <li>数据5</li>
+      <li>数据6</li>
+      <li>数据7</li>
+      <li>数据8</li>
+      <li>数据9</li>
+      <li>数据10</li>
       <li>数据1</li>
       <li>数据2</li>
       <li>数据3</li>
@@ -65,5 +95,10 @@ export default {
   }
   .banner {
     margin-top: 44px;
+  }
+  .tabcontrol {
+    position: sticky;
+    top: 44px;
+    background-color: #fff;
   }
 </style>
