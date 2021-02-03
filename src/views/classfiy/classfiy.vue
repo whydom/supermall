@@ -1,5 +1,5 @@
 <template>
-  <div id="classfiy">
+  <div id="classfiy" ref="classfiy">
     <div class="content">
        <ul>
       <button @click=btnclick>按钮</button>
@@ -122,12 +122,13 @@ export default {
    }
  },
  mounted() {
-   this.scroll = new Bscroll(document.querySelector('#classfiy'),{
+   this.scroll = new Bscroll(this.$refs.classfiy,{
     //  这个是检测是否监听滚动坐标的配置文件
+    // 0). 当 probeType 为 0 的时候，不会触发scroll 事件；
     // 1). 当 probeType 为 1 的时候，会非实时（屏幕滑动超过一定时间后）派发scroll 事件；
     // 2). 当 probeType 为 2 的时候，会在屏幕滑动的过程中实时的派发 scroll 事件；
     // 3). 当 probeType 为 3 的时候，不仅在屏幕滑动的过程中，而且在 momentum 滚动动画运行过程中实时派发 scroll 事件
-     probeType: 3,
+     probeType : 0,
     //  这个是下拉更新的配置文件,如果只单纯设置true的话默认stop：40
     // threshold： 可以配置顶部下拉的距离（threshold）决定刷新时机。stop： 回弹停留的距离（stop）
      pullDownRefresh: {
@@ -138,9 +139,9 @@ export default {
     pullUpLoad: true
 
    })
-  //  this.scroll.on('scroll',(position) => {
-  //    console.log(position);
-  //  })
+   this.scroll.on('scroll',(position) => {
+     console.log(position);
+   })
 
   // 这个是下拉加载更多的监听事件
    this.scroll.on('pullingDown',() => {
@@ -156,7 +157,7 @@ export default {
   })
 
   // 这个是方法，滚动指定的距离
-  this.scroll.scrollTo(0,100,3000)
+  this.scroll.scrollTo(0,0,300)
 
  },
 }
@@ -165,6 +166,6 @@ export default {
   #classfiy {
     height: 150px;
     background-color: #f00;
-    /* overflow-y: scroll; */
+    overflow: hidden;
   }
 </style>
