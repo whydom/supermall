@@ -1,12 +1,12 @@
 <template>
   <div class="home">
     <navbar id="navbar"><div slot="center">购物街</div></navbar>
-    
+    <tabcontrol :title="['流行','新款','精选']" class="tabcontrol" ref="tabcontrol1" v-show="isload" @itemclick='itemclick1'></tabcontrol>
     <scroll class="content" ref="scroll" :probeType='istrue' @scroll='contentscroll'>
-      <mainnav :banner='banner' class="banner"></mainnav>
+      <mainnav :banner='banner' class="banner" @navload='navload'></mainnav>
       <recommd :recommd1='recommd'></recommd>
       <feature></feature>
-      <tabcontrol :title="['流行','新款','精选']" class="tabcontrol"></tabcontrol>
+      <tabcontrol :title="['流行','新款','精选']" ref="tabcontrol" @itemclick='itemclick2'></tabcontrol>
       <ul>
         <li>模拟数据1</li>
         <li>模拟数据2</li>
@@ -137,7 +137,10 @@ export default {
       banner:[],
       recommd:[],
       isshow: false,
-      istrue: true
+      istrue: true,
+      tabcontroloffsettop: 0,
+      isload: false,
+      starY: 0      //记录一下home页面的滚动y坐标
     }
   },
   components:{
@@ -155,13 +158,53 @@ export default {
       this.recommd = res.data.data.recommend.list
     })
   },
+  mounted() {
+    // console.log(this.$refs.tabcontrol.$el.offsetTop);
+    // this.tabcontroloffsettop = this.$refs.tabcontrol.$el.offsetTop
+  },
   methods: {
     backtopclick() {
       this.$refs.scroll.scroll.scrollTo(0,0,500)
     },
     contentscroll(position) {
+      // 判断backtop显示
       this.isshow = -position.y > 1000?true:false
+
+      // 判断tabcontrol的替代品啥时候出现
+      this.isload = -position.y > this.tabcontroloffsettop
+    },
+    navload() {
+      console.log(this.$refs.tabcontrol.$el.offsetTop);
+      this.tabcontroloffsettop = this.$refs.tabcontrol.$el.offsetTop
+    },
+    // 两个nav之间的互相传状态
+    itemclick1(index) {
+      this.$refs.tabcontrol.currentindex = index
+    },
+    itemclick2(index) {
+      this.$refs.tabcontrol1.currentindex = index
     }
+  },
+  // 测试是否会销毁，不想销毁则需要外套一层keep-alive
+  destroyed() {
+    console.log('----')
+  },
+  // 这个是进入该页面触发
+  activated() {
+    // 进入页面后滚动到当时离开的时候记录的y坐标
+    setTimeout(() => {
+      this.$refs.scroll.scroll.scrollTo(0,this.starY,0)
+      //this.$refs.scroll.scroll.refresh()
+    },600)
+    
+    // 
+  },
+  // 这个是离开该页面触发
+  deactivated() {
+    // 离开home页面的时候记录下当前滚动的位置
+    console.log(this.$refs.scroll.scroll.y);
+    this.starY = this.$refs.scroll.scroll.y
+    
   },
 }
 </script>
@@ -171,14 +214,15 @@ export default {
   position: relative;
 }
   #navbar {
-    position: fixed;
+    /* 因为用的是better-scroll滚动，所以不需要固定定位了，因为固定定位是用于原生滚动的 */
+    /* position: fixed;
     top: 0;
-    z-index: 99;
+    z-index: 99; */
     width: 100%;
   }
   .tabcontrol {
-    position: sticky;
-    top: 44px;
+    position: relative;
+    z-index: 99;
     background-color: #fff;
   }
   .content {

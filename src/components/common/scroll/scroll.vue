@@ -43,10 +43,6 @@ export default {
       console.log('上来加载更多');
       this.scroll.finishPullUp()
     })
-
-    console.log(this.scroll);
-
-
     },500)
     
     

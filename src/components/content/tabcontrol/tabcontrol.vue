@@ -23,6 +23,7 @@ export default {
   methods: {
     itemclick(index) {
       this.currentindex = index
+      this.$emit('itemclick',index)
     }
   },
 }
